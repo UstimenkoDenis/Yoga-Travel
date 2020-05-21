@@ -124,7 +124,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // Пишу сам функцию вызова модального окна
+    // Модальное окно
 
 
     function modal(button, modalBlock, popupClose) { // кнопка на которую будет наложен обработчик события, класс модального окна, 
