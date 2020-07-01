@@ -5,8 +5,7 @@ window.addEventListener('DOMContentLoaded', function () {
         let tab = document.querySelectorAll('.' + infoHeaderTab),
             info = document.querySelector('.' + infoHeader),
             tabContent = document.querySelectorAll('.' + infoTabContent);
-
-        // функция которая будет скрывать табы
+        
         function hideTabContent(a) {
             for (let i = a; i < tabContent.length; i++) {
 
