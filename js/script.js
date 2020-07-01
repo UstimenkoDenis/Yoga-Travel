@@ -16,8 +16,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
 
         hideTabContent(1); 
-
-        // функция которая будет показывать табконтент
+     
         function showTabContent(b) {
             if (tabContent[b].classList.contains('hide')) { 
                 tabContent[b].classList.remove('hide'); 
