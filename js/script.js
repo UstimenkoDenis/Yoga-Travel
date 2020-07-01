@@ -1,37 +1,30 @@
-// Заменил все callback функции стрелочными 
-
 window.addEventListener('DOMContentLoaded', function () {
-
-    'use strict'; // переходим в строгий режим
-
+    'use strict';
 
     function myTab(infoHeader, infoHeaderTab, infoTabContent) {
-
         let tab = document.querySelectorAll('.' + infoHeaderTab),
             info = document.querySelector('.' + infoHeader),
             tabContent = document.querySelectorAll('.' + infoTabContent);
 
-        // функция которая будет скрывать наши табы
+        // функция которая будет скрывать табы
         function hideTabContent(a) {
             for (let i = a; i < tabContent.length; i++) {
 
-                tabContent[i].classList.remove('show'); // удаляем с каждого таба класс show
-                tabContent[i].classList.add('hide'); // и полностью скроем со страницы
-
+                tabContent[i].classList.remove('show'); 
+                tabContent[i].classList.add('hide'); 
             }
         }
 
-        hideTabContent(1); // скроются все табконтенты кроме первого
+        hideTabContent(1); 
 
         // функция которая будет показывать табконтент
         function showTabContent(b) {
-            if (tabContent[b].classList.contains('hide')) { // если содежит класс hide
-                tabContent[b].classList.remove('hide'); // удаляем с каждого таба класс hide
-                tabContent[b].classList.add('show'); // показываем
+            if (tabContent[b].classList.contains('hide')) { 
+                tabContent[b].classList.remove('hide'); 
+                tabContent[b].classList.add('show'); 
             }
         }
-
-        // ставим обработчик событий на info 
+        
         info.addEventListener('click', (event) => {
             let target = event.target;
 
@@ -39,38 +32,26 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 for (let i = 0; i < tab.length; i++) {
                     if (target == tab[i]) {
-                        hideTabContent(0); // скрываем все табы
-                        showTabContent(i); // показываем нужный таб
+                        hideTabContent(0);
+                        showTabContent(i);
                         break;
                     }
                 }
             }
         });
     }
-    // Вызов нашей функции
+    
     myTab('info-header', 'info-header-tab', 'info-tabcontent');
 
-
-
-
-
-
-
     //////////// Timer
-
     let deadline = '2020-02-29';
-    // Узнаем промежуток времени который лежит между сейчас и deadline
-
-    function getTimeRemaining(endtime) {
-        // Любую дату можно превратить в количество миллисекунд которые прошли с первого января 1970 г методом parse
-        let t = Date.parse(endtime) - Date.parse(new Date()), // в t - лежит количество миллисекунд которые лежат в промежутке
-            // теперь мы располагаем количеством миллисикунд, но нам надо получить три параметра часы минуты секунды
-            seconds = Math.floor((t / 1000) % 60), // получим  целое число методом floor  // делим на 1000 получаем из миллисекунд секунды
-        // %60 получим остаток от деления секунд на 60
+   
+    function getTimeRemaining(endtime) {       
+        let t = Date.parse(endtime) - Date.parse(new Date()), 
+            seconds = Math.floor((t / 1000) % 60), 
             minutes = Math.floor((t / 1000 / 60) % 60),
             hours = Math.floor((t / (1000 * 60 * 60)));
-            // days = Math.floor((t/(1000*60*60*24)))
-//..Здесь мы создаем объект и возвращаем его
+           
         return {
             'total': t,
             'hours': hours,
@@ -79,23 +60,17 @@ window.addEventListener('DOMContentLoaded', function () {
         };
         
     }
-    // напишем функцию которая превращает нашу статичную верстку в динамичную
 
-    // создадим функцию которая создает различные переменные и привязывает к ним элементы страницы
     function setClock(id, endtime){
         let timer = document.getElementById(id),
             hours = timer.querySelector('.hours'),
             minutes = timer.querySelector('.minutes'),
             seconds = timer.querySelector('.seconds'),
             timeInterval = setInterval(updateClock , 1000);
-
-        // следующая функция сначала получает разницу между временем gettimeRemaining, которая возвращает объект с данными 
-        // для нашего таймера и записываем все эти данные в верстку
-
+       
         function updateClock(){
-                let t = getTimeRemaining(endtime);
+                let t = getTimeRemaining(endtime);              
               
-               // добавляем нолик если число от 0 до 9
                 if (t.hours >= 0 && t.hours <=9){
                     hours.textContent = '0' + t.hours;
                 } else hours.textContent = t.hours;
@@ -107,9 +82,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 } else seconds.textContent = t.seconds;
 
                 if (t.total <= 0 ){
-
                     clearInterval(timeInterval);
-                    // выставляем нули если deadline был раньше чем сейчас
+                   
                     hours.textContent = '00';
                     minutes.textContent = '00';
                     seconds.textContent = '00'; 
@@ -120,62 +94,41 @@ window.addEventListener('DOMContentLoaded', function () {
 
     setClock('timer', deadline);
 
-
-
-
-
     // Модальное окно
-
-
-    function modal(button, modalBlock, popupClose) { // кнопка на которую будет наложен обработчик события, класс модального окна, 
-                                                    //класс блока с крестиком закрывающего модальное окно
+    function modal(button, modalBlock, popupClose) {                                                    
         let btn = document.querySelectorAll(button),
-            mdBlock = document.querySelector(modalBlock), //наше модальное окно
-            closeModal = document.querySelector(popupClose); // окно с крестиком
+            mdBlock = document.querySelector(modalBlock), 
+            closeModal = document.querySelector(popupClose); 
             console.log(btn);
-        btn.forEach ((item) => { // перебираем все элементы этого класса
-
-            item.addEventListener('click',() => { // ставим обработчик на каждый элемент
+        btn.forEach ((item) => { 
+            item.addEventListener('click',() => { 
                 mdBlock.style.display = 'block';
                 //this.classList.add('more-splash');
                 document.body.style.overflow = 'hidden';
             })
 
         })
-                closeModal.addEventListener('click',() => { // обработчик на закрывающий блок он всегда один в данный момент
+                closeModal.addEventListener('click',() => {
                 mdBlock.style.display = 'none';
                 //this.classList.remove('more-splash');
                 document.body.style.overflow = '';
-                })
-        
-        
+                })        
     }
-    modal('.more', '.overlay', '.popup-close'); //вызываем функцию для кнопок с классом more
-    modal('.description-btn', '.overlay', '.popup-close'); //вызываем функцию для кнопок с классом description-btn
-    
-  
+    modal('.more', '.overlay', '.popup-close');
+    modal('.description-btn', '.overlay', '.popup-close');  
 
-   // Форма 
-   // Первым делом создадим объект в котором будут содержаться различные состояния нашего запроса
-    
-   
-    // делаю функцию и Вставляю промис
-
-   
+   // Форма       
     function sendForm(formID) {
        
         
 
         let message = {
-            loading: ' Загрузка...', // эта строка будет показываться пользователю пока наш запрос еще не обработался
+            loading: ' Загрузка...',
             success: ' Спасибо! Скоро мы с вами свяжемся!',
             failure: ' Что-то пошло не так...'
-        }
-        
-    
-        let statusMessage = document.createElement('div'); // создаем новый элемент
-        statusMessage.classList.add('status'); // стилизуем его добавляя ему класс
-    
+        }    
+        let statusMessage = document.createElement('div'); 
+        statusMessage.classList.add('status');     
         statusMessage.innerHTML = '';
 
         let contactForm = document.getElementById(formID),
@@ -185,12 +138,12 @@ window.addEventListener('DOMContentLoaded', function () {
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            let formData = new FormData(contactForm); // переносим данные из формы в объект
+            let formData = new FormData(contactForm); 
             let obj = {};
             formData.forEach(function(value, key) {
                 obj[key] = value;
             })
-            let json = JSON.stringify(obj); // формируем из нашего объекта JSON объект 
+            let json = JSON.stringify(obj);
 
                 function postData(data) {
                     return  new Promise(function (resolve, reject) {
@@ -200,24 +153,20 @@ window.addEventListener('DOMContentLoaded', function () {
                         
                         request.onreadystatechange = function () { 
                             
-                            if (request.readyState < 4) { //..пока еще грузится
-                                //resolve();
-                               
+                            if (request.readyState < 4) { 
+                                //resolve();                               
                             } else if (request.readyState === 4) {
                                 if (request.status == 200 && request.status < 300) {
-
                                     resolve();
                                 } else {
                                       reject(request.status);
-
                                  }
                             }
                         }
                         request.send(data);   
                     });
                     
-                } // end postData
-
+                } 
                 function clearInput() {
                     for (let i = 0; i < input.length; i++) {
                         input[i].value = '';
@@ -227,20 +176,14 @@ window.addEventListener('DOMContentLoaded', function () {
                     .then(() => {statusMessage.innerHTML = message.loading;})
                     .then(() => {statusMessage.innerHTML = message.success;})
                     .catch(err => {statusMessage.innerHTML = message.failure + 'Ошибка  ' + err ;})
-                    .then(clearInput())        // выполнится в любом случае
+                    .then(clearInput())       
 
         })
-
-        
-
     }  
-    sendForm('main-form'); //..подключаю отправку формы к модальному окну
-    sendForm('form'); // подключаю отправку формы к контактной форме
-               
-    
+    sendForm('main-form');
+    sendForm('form');   
 
     // Slider
-
     let slideIndex = 1,
         slides = document.querySelectorAll('.slider-item'),
         prev = document.querySelector('.prev'),
@@ -264,12 +207,12 @@ window.addEventListener('DOMContentLoaded', function () {
         dots[slideIndex-1].classList.add('dot-active');
     }
     
-    function plusSlides(n) { // изменяет наш slideIndex и сразу вызывает showSlides()
+    function plusSlides(n) { 
         showSlides(slideIndex += n);
     }
 
-    function currentSlide(n) { //функция которая будет определять текущий слайд и устанавливать его
-        showSlides(slideIndex = n); // когда  мы кликаем на 4 точку n будет равняться 4 и наш slideIndex = 4
+    function currentSlide(n) { 
+        showSlides(slideIndex = n); 
     }
     prev.addEventListener('click', function () {
         plusSlides(-1);
@@ -277,8 +220,7 @@ window.addEventListener('DOMContentLoaded', function () {
     next.addEventListener('click', function () {
         plusSlides(1);
     })
-
-    // Теперь сделаем чтобы можно было нажимать на кружки, применим делегирование
+   
     dotsWrap.addEventListener('click', function(event) {
         for(let i=0; i < dots.length + 1; i++) {
             if(event.target.classList.contains('dot') && event.target == dots[i-1]) {
@@ -288,9 +230,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     })
 
-
      // Калькулятор
-
      let persons = document.querySelectorAll('.counter-block-input')[0],
          restDays = document.querySelectorAll('.counter-block-input')[1],
          place = document.getElementById('select'),
@@ -301,7 +241,6 @@ window.addEventListener('DOMContentLoaded', function () {
          totalValue.innerHTML = 0;
 
          persons.addEventListener('change', function() {
-              // здесь нельзя использовать стрелочные функции тк будем использовать контекст вызова this 
             personsSum = +this.value;
             total = (daysSum + personsSum) * 4000;
             if (restDays.value == '' || persons.value == '') {
